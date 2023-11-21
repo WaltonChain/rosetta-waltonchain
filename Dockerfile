@@ -33,21 +33,25 @@ ENV GOPATH /go
 ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
 RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH"
 
-# Compile geth
+# Compile gwtc
 FROM golang-builder as geth-builder
 
-# VERSION: go-ethereum v.1.10.16
-RUN git clone https://github.com/ethereum/go-ethereum \
-  && cd go-ethereum \
-  && git checkout 20356e57b119b4e70ce47665a71964434e15200d
+# VERSION: WaltonChain_Gwtc_Src latest
+RUN git clone https://github.com/WaltonChain/WaltonChain_Gwtc_Src.git \
+  && cd WaltonChain_Gwtc_Src \
+  && git checkout 8a298c95a819491400b86e271bd109a037fa2d08 \
 
-RUN cd go-ethereum \
-  && make geth
+RUN mkdir -p $GOPATH/src/github.com/wtc \
+  && mv WaltonChain_Gwtc_Src/ $GOPATH/src/github.com/wtc/go-wtc \
+  && cd $GOPATH/src/github.com/wtc/go-wtc \
+  && go env -w GO111MODULE="auto" \
+  && cd cmd/gwtc \
+  && go build
 
-RUN mv go-ethereum/build/bin/geth /app/geth \
-  && rm -rf go-ethereum
+RUN mv $GOPATH/src/github.com/wtc/go-wtc/cmd/gwtc /app/gwtc \
+  && rm -rf WaltonChain_Gwtc_Src $GOPATH/src/github.com
 
-# Compile rosetta-ethereum
+# Compile rosetta-waltonchain
 FROM golang-builder as rosetta-builder
 
 # Use native remote build context to build in any directory
@@ -55,10 +59,10 @@ COPY . src
 RUN cd src \
   && go build
 
-RUN mv src/rosetta-ethereum /app/rosetta-ethereum \
-  && mkdir /app/ethereum \
-  && mv src/ethereum/call_tracer.js /app/ethereum/call_tracer.js \
-  && mv src/ethereum/geth.toml /app/ethereum/geth.toml \
+RUN mv src/rosetta-waltonchain /app/rosetta-waltonchain \
+  && mkdir /app/waltonchain \
+  && mv src/waltonchain/call_tracer.js /app/waltonchain/call_tracer.js \
+  && mv src/waltonchain/geth.toml /app/waltonchain/geth.toml \
   && rm -rf src
 
 ## Build Final Image
@@ -74,13 +78,13 @@ RUN mkdir -p /app \
 WORKDIR /app
 
 # Copy binary from geth-builder
-COPY --from=geth-builder /app/geth /app/geth
+COPY --from=geth-builder /app/gwtc /app/gwtc
 
 # Copy binary from rosetta-builder
-COPY --from=rosetta-builder /app/ethereum /app/ethereum
-COPY --from=rosetta-builder /app/rosetta-ethereum /app/rosetta-ethereum
+COPY --from=rosetta-builder /app/waltonchain /app/waltonchain
+COPY --from=rosetta-builder /app/rosetta-waltonchain /app/rosetta-waltonchain
 
 # Set permissions for everything added to /app
 RUN chmod -R 755 /app/*
 
-CMD ["/app/rosetta-ethereum", "run"]
+CMD ["/app/rosetta-waltonchain", "run"]
