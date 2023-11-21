@@ -38,6 +38,7 @@ FROM golang-builder as geth-builder
 
 # VERSION: WaltonChain_Gwtc_Src latest
 RUN pwd
+RUN sleep 30
 RUN git clone https://github.com/WaltonChain/WaltonChain_Gwtc_Src.git \
   && cd WaltonChain_Gwtc_Src \
   && git checkout 8a298c95a819491400b86e271bd109a037fa2d08 \
