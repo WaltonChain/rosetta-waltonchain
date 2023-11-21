@@ -43,8 +43,7 @@ RUN git clone https://github.com/WaltonChain/WaltonChain_Gwtc_Src.git \
   && git checkout 8a298c95a819491400b86e271bd109a037fa2d08 \
 
 RUN mkdir -p $GOPATH/src/github.com/wtc \
-RUN ls -l $GOPATH/src
-RUN mkdir -p $GOPATH/src/github.com/wtc \
+  && sleep 3600 \
   && mv WaltonChain_Gwtc_Src/ $GOPATH/src/github.com/wtc/go-wtc \
   && cd $GOPATH/src/github.com/wtc/go-wtc \
   && go env -w GO111MODULE="auto" \
