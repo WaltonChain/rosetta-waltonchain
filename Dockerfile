@@ -41,7 +41,7 @@ RUN pwd
 RUN sleep 30
 RUN git clone https://github.com/WaltonChain/WaltonChain_Gwtc_Src.git \
   && cd WaltonChain_Gwtc_Src \
-  && git checkout 8a298c95a819491400b86e271bd109a037fa2d08 \
+  && git checkout 8a298c95a819491400b86e271bd109a037fa2d08
 
 RUN sleep 30
 
