@@ -37,10 +37,13 @@ RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH"
 FROM golang-builder as geth-builder
 
 # VERSION: WaltonChain_Gwtc_Src latest
+RUN pwd
 RUN git clone https://github.com/WaltonChain/WaltonChain_Gwtc_Src.git \
   && cd WaltonChain_Gwtc_Src \
   && git checkout 8a298c95a819491400b86e271bd109a037fa2d08 \
 
+RUN mkdir -p $GOPATH/src/github.com/wtc \
+RUN ls -l $GOPATH/src
 RUN mkdir -p $GOPATH/src/github.com/wtc \
   && mv WaltonChain_Gwtc_Src/ $GOPATH/src/github.com/wtc/go-wtc \
   && cd $GOPATH/src/github.com/wtc/go-wtc \
