@@ -54,39 +54,39 @@ RUN mv $GOPATH/src/github.com/wtc/go-wtc/cmd/gwtc /app/gwtc \
   && rm -rf WaltonChain_Gwtc_Src $GOPATH/src/github.com
 
 # Compile rosetta-waltonchain
-FROM golang-builder as rosetta-builder
-
-# Use native remote build context to build in any directory
-COPY . src
-RUN cd src \
-  && go build
-
-RUN mv src/rosetta-waltonchain /app/rosetta-waltonchain \
-  && mkdir /app/waltonchain \
-  && mv src/waltonchain/call_tracer.js /app/waltonchain/call_tracer.js \
-  && mv src/waltonchain/geth.toml /app/waltonchain/geth.toml \
-  && rm -rf src
-
-## Build Final Image
-FROM ubuntu:20.04
-
-RUN apt-get update && apt-get install -y ca-certificates && update-ca-certificates
-
-RUN mkdir -p /app \
-  && chown -R nobody:nogroup /app \
-  && mkdir -p /data \
-  && chown -R nobody:nogroup /data
-
-WORKDIR /app
-
-# Copy binary from geth-builder
-COPY --from=geth-builder /app/gwtc /app/gwtc
-
-# Copy binary from rosetta-builder
-COPY --from=rosetta-builder /app/waltonchain /app/waltonchain
-COPY --from=rosetta-builder /app/rosetta-waltonchain /app/rosetta-waltonchain
-
-# Set permissions for everything added to /app
-RUN chmod -R 755 /app/*
-
-CMD ["/app/rosetta-waltonchain", "run"]
+#FROM golang-builder as rosetta-builder
+#
+## Use native remote build context to build in any directory
+#COPY . src
+#RUN cd src \
+#  && go build
+#
+#RUN mv src/rosetta-waltonchain /app/rosetta-waltonchain \
+#  && mkdir /app/waltonchain \
+#  && mv src/waltonchain/call_tracer.js /app/waltonchain/call_tracer.js \
+#  && mv src/waltonchain/geth.toml /app/waltonchain/geth.toml \
+#  && rm -rf src
+#
+### Build Final Image
+#FROM ubuntu:20.04
+#
+#RUN apt-get update && apt-get install -y ca-certificates && update-ca-certificates
+#
+#RUN mkdir -p /app \
+#  && chown -R nobody:nogroup /app \
+#  && mkdir -p /data \
+#  && chown -R nobody:nogroup /data
+#
+#WORKDIR /app
+#
+## Copy binary from geth-builder
+#COPY --from=geth-builder /app/gwtc /app/gwtc
+#
+## Copy binary from rosetta-builder
+#COPY --from=rosetta-builder /app/waltonchain /app/waltonchain
+#COPY --from=rosetta-builder /app/rosetta-waltonchain /app/rosetta-waltonchain
+#
+## Set permissions for everything added to /app
+#RUN chmod -R 755 /app/*
+#
+#CMD ["/app/rosetta-waltonchain", "run"]
