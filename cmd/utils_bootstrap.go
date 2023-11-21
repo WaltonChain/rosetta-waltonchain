@@ -15,7 +15,7 @@
 package cmd
 
 import (
-	"github.com/coinbase/rosetta-ethereum/ethereum"
+	"github.com/coinbase/rosetta-waltonchain/ethereum"
 
 	"github.com/spf13/cobra"
 )

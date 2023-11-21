@@ -22,9 +22,9 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/coinbase/rosetta-ethereum/configuration"
-	"github.com/coinbase/rosetta-ethereum/ethereum"
-	"github.com/coinbase/rosetta-ethereum/services"
+	"github.com/coinbase/rosetta-waltonchain/configuration"
+	"github.com/coinbase/rosetta-waltonchain/ethereum"
+	"github.com/coinbase/rosetta-waltonchain/services"
 
 	"github.com/coinbase/rosetta-sdk-go/asserter"
 	"github.com/coinbase/rosetta-sdk-go/server"

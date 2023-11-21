@@ -20,7 +20,7 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/coinbase/rosetta-ethereum/ethereum"
+	"github.com/coinbase/rosetta-waltonchain/ethereum"
 
 	"github.com/coinbase/rosetta-sdk-go/types"
 	"github.com/ethereum/go-ethereum/params"

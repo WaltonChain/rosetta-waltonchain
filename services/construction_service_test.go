@@ -21,9 +21,9 @@ import (
 	"math/big"
 	"testing"
 
-	"github.com/coinbase/rosetta-ethereum/configuration"
-	"github.com/coinbase/rosetta-ethereum/ethereum"
-	mocks "github.com/coinbase/rosetta-ethereum/mocks/services"
+	"github.com/coinbase/rosetta-waltonchain/configuration"
+	"github.com/coinbase/rosetta-waltonchain/ethereum"
+	mocks "github.com/coinbase/rosetta-waltonchain/mocks/services"
 
 	"github.com/coinbase/rosetta-sdk-go/types"
 	"github.com/ethereum/go-ethereum/common"

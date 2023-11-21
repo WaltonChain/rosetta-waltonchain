@@ -63,8 +63,8 @@ RUN cd src \
 
 RUN mv src/rosetta-waltonchain /app/rosetta-waltonchain \
   && mkdir /app/waltonchain \
-  && mv src/waltonchain/call_tracer.js /app/waltonchain/call_tracer.js \
-  && mv src/waltonchain/geth.toml /app/waltonchain/geth.toml \
+  && mv src/ethereum/call_tracer.js /app/waltonchain/call_tracer.js \
+  && mv src/ethereum/geth.toml /app/waltonchain/geth.toml \
   && rm -rf src
 
 ## Build Final Image
