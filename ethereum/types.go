@@ -108,7 +108,7 @@ const (
 	TransferGasLimit = int64(21000) //nolint:gomnd
 
 	// MainnetGethArguments are the arguments to start a mainnet geth instance.
-	MainnetGethArguments = `--verbosity 4 --identity "development" --rpc --rpccorsdomain "*"  --config /app/waltonchain/geth.toml --syncmode full --gcmode archive --port "30304" --networkid 15 --rpcport 8545`
+	MainnetGethArguments = `--datadir /data/ --verbosity 4 --identity "development" --rpc --rpccorsdomain "*"  --config /app/waltonchain/geth.toml --syncmode full --gcmode archive --port "30304" --networkid 15 --rpcport 8545`
 
 	// IncludeMempoolCoins does not apply to rosetta-waltonchain as it is not UTXO-based.
 	IncludeMempoolCoins = false
@@ -118,7 +118,7 @@ var (
 	MainnetGenesisHash = common.HexToHash("0xb9eec892c0bd1641ef58d1b0acf798f848292e5f5b36f07a250ba592e55ac605")
 
 	MainnetChainConfig = &params.ChainConfig{
-		ChainID:        big.NewInt(16),
+		ChainID:        big.NewInt(15),
 		HomesteadBlock: big.NewInt(1),
 		EIP150Block:    big.NewInt(2),
 		EIP150Hash:     common.HexToHash("0x0000000000000000000000000000000000000000000000000000000000000000"),
