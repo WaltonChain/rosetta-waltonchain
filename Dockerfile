@@ -80,11 +80,11 @@ RUN mkdir -p /app \
 WORKDIR /app
 
 # Copy binary from geth-builder
-COPY --from=geth-builder /app/gwtc /app/gwtc
+COPY --from=geth-builder /app/* /app/*
 
 # Copy binary from rosetta-builder
-COPY --from=rosetta-builder /app/waltonchain /app/waltonchain
-COPY --from=rosetta-builder /app/rosetta-waltonchain /app/rosetta-waltonchain
+COPY --from=rosetta-builder /app/* /app/*
+# COPY --from=rosetta-builder /app/rosetta-waltonchain /app/rosetta-waltonchain
 
 # Set permissions for everything added to /app
 RUN chmod -R 755 /app/*
