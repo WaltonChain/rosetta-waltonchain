@@ -2,7 +2,7 @@
 SyncMode = "full"
 
 [Node]
-DataDir = "/data"
+DataDir = "/data/"
 NoUSB = true
 HTTPHost = "0.0.0.0"
 HTTPPort = 8545
@@ -15,3 +15,6 @@ IPCPath = ""
 ReadTimeout = 120000000000
 WriteTimeout = 120000000000
 IdleTimeout = 120000000000
+
+[Log]
+File = "/data/log"
