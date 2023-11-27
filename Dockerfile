@@ -88,6 +88,6 @@ COPY --from=rosetta-builder /app/rosetta-waltonchain /app/rosetta-waltonchain
 
 # Set permissions for everything added to /app
 RUN chmod -R 755 /app/*
-RUN gwtc --datadir /data/ init ./wtc.json
+RUN ./gwtc --datadir /data/ init ./wtc.json
 
 CMD ["/app/rosetta-waltonchain", "run"]
