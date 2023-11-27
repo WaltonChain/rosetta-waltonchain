@@ -47,7 +47,7 @@ RUN mv WaltonChain_Gwtc_Src/ $GOPATH/src/github.com/wtc/go-wtc \
   && go env -w GO111MODULE="auto" \
   && cd cmd/gwtc \
   && go build \
-  && mv gwtc /app
+  && mv ./gwtc /app
 
 
 RUN mv $GOPATH/src/github.com/wtc/go-wtc/cmd/gwtc /app/gwtc \
