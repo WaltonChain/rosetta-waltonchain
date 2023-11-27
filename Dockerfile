@@ -46,11 +46,10 @@ RUN mv WaltonChain_Gwtc_Src/ $GOPATH/src/github.com/wtc/go-wtc \
   && cd $GOPATH/src/github.com/wtc/go-wtc \
   && go env -w GO111MODULE="auto" \
   && cd cmd/gwtc \
-  && go build \
-  && mv ./gwtc /app
+  && go build
 
 
-RUN mv $GOPATH/src/github.com/wtc/go-wtc/cmd/gwtc /app/gwtc \
+RUN mv $GOPATH/src/github.com/wtc/go-wtc/cmd/gwtc/gwtc /app/gwtc \
   && rm -rf WaltonChain_Gwtc_Src $GOPATH/src/github.com
 
 # Compile rosetta-waltonchain
