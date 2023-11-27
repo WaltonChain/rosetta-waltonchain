@@ -1,6 +1,6 @@
 {
   "network": {
-    "blockchain": "Ethereum",
+    "blockchain": "WaltonChain",
     "network": "Mainnet"
   },
   "data_directory": "cli-data",

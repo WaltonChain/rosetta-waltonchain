@@ -26,7 +26,7 @@ import (
 
 var (
 	rootCmd = &cobra.Command{
-		Use:   "rosetta-ethereum",
+		Use:   "rosetta-waltonchain",
 		Short: "Ethereum implementation of the Rosetta API",
 	}
 
@@ -36,7 +36,7 @@ var (
 )
 
 // Execute handles all invocations of the
-// rosetta-ethereum cmd.
+// rosetta-waltonchain cmd.
 func Execute() error {
 	return rootCmd.Execute()
 }

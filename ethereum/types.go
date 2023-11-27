@@ -16,43 +16,27 @@ package ethereum
 
 import (
 	"context"
-	"fmt"
-
 	"github.com/coinbase/rosetta-sdk-go/types"
+	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/params"
 	"github.com/ethereum/go-ethereum/rpc"
+	"math/big"
 )
 
 const (
 	// NodeVersion is the version of geth we are using.
-	NodeVersion = "1.9.24"
+	NodeVersion = "1.1.3"
 
 	// Blockchain is Ethereum.
-	Blockchain string = "Ethereum"
+	Blockchain string = "WaltonChain"
 
 	// MainnetNetwork is the value of the network
 	// in MainnetNetworkIdentifier.
 	MainnetNetwork string = "Mainnet"
 
-	// RopstenNetwork is the value of the network
-	// in RopstenNetworkIdentifier.
-	RopstenNetwork string = "Ropsten"
-
-	// RinkebyNetwork is the value of the network
-	// in RinkebyNetworkNetworkIdentifier.
-	RinkebyNetwork string = "Rinkeby"
-
-	// GoerliNetwork is the value of the network
-	// in GoerliNetworkNetworkIdentifier.
-	GoerliNetwork string = "Goerli"
-
-	// DevNetwork is the value of the network
-	// in DevNetworkNetworkIdentifier.
-	DevNetwork string = "Dev"
-
 	// Symbol is the symbol value
 	// used in Currency.
-	Symbol = "ETH"
+	Symbol = "WTC"
 
 	// Decimals is the decimals value
 	// used in Currency.
@@ -124,50 +108,30 @@ const (
 	TransferGasLimit = int64(21000) //nolint:gomnd
 
 	// MainnetGethArguments are the arguments to start a mainnet geth instance.
-	MainnetGethArguments = `--config=/app/ethereum/geth.toml --gcmode=archive --graphql`
+	MainnetGethArguments = `--config /app/waltonchain/geth.toml --syncmode full --gcmode archive`
 
-	// IncludeMempoolCoins does not apply to rosetta-ethereum as it is not UTXO-based.
+	// IncludeMempoolCoins does not apply to rosetta-waltonchain as it is not UTXO-based.
 	IncludeMempoolCoins = false
 )
 
 var (
-	// RopstenGethArguments are the arguments to start a ropsten geth instance.
-	RopstenGethArguments = fmt.Sprintf("%s --ropsten", MainnetGethArguments)
+	MainnetGenesisHash = common.HexToHash("0xb9eec892c0bd1641ef58d1b0acf798f848292e5f5b36f07a250ba592e55ac605")
 
-	// RinkebyGethArguments are the arguments to start a rinkeby geth instance.
-	RinkebyGethArguments = fmt.Sprintf("%s --rinkeby", MainnetGethArguments)
+	MainnetChainConfig = &params.ChainConfig{
+		ChainID:        big.NewInt(16),
+		HomesteadBlock: big.NewInt(1),
+		EIP150Block:    big.NewInt(2),
+		EIP150Hash:     common.HexToHash("0x0000000000000000000000000000000000000000000000000000000000000000"),
+		EIP155Block:    big.NewInt(3),
+		EIP158Block:    big.NewInt(3),
+		ByzantiumBlock: big.NewInt(4),
 
-	// GoerliGethArguments are the arguments to start a ropsten geth instance.
-	GoerliGethArguments = fmt.Sprintf("%s --goerli", MainnetGethArguments)
-
-	// DevGethArguments are the arguments to start a dev geth instance.
-	DevGethArguments = fmt.Sprintf("%s --dev", MainnetGethArguments)
-
+		Ethash: new(params.EthashConfig),
+	}
 	// MainnetGenesisBlockIdentifier is the *types.BlockIdentifier
 	// of the mainnet genesis block.
 	MainnetGenesisBlockIdentifier = &types.BlockIdentifier{
-		Hash:  params.MainnetGenesisHash.Hex(),
-		Index: GenesisBlockIndex,
-	}
-
-	// RopstenGenesisBlockIdentifier is the *types.BlockIdentifier
-	// of the Ropsten genesis block.
-	RopstenGenesisBlockIdentifier = &types.BlockIdentifier{
-		Hash:  params.RopstenGenesisHash.Hex(),
-		Index: GenesisBlockIndex,
-	}
-
-	// RinkebyGenesisBlockIdentifier is the *types.BlockIdentifier
-	// of the Ropsten genesis block.
-	RinkebyGenesisBlockIdentifier = &types.BlockIdentifier{
-		Hash:  params.RinkebyGenesisHash.Hex(),
-		Index: GenesisBlockIndex,
-	}
-
-	// GoerliGenesisBlockIdentifier is the *types.BlockIdentifier
-	// of the Goerli genesis block.
-	GoerliGenesisBlockIdentifier = &types.BlockIdentifier{
-		Hash:  params.GoerliGenesisHash.Hex(),
+		Hash:  MainnetGenesisHash.Hex(),
 		Index: GenesisBlockIndex,
 	}
 

@@ -28,8 +28,8 @@ import (
 )
 
 const (
-	gethLogger       = "geth"
-	gethStdErrLogger = "geth err"
+	gethLogger       = "gwtc"
+	gethStdErrLogger = "gwtc err"
 )
 
 // logPipe prints out logs from geth. We don't end when context
@@ -53,7 +53,7 @@ func logPipe(pipe io.ReadCloser, identifier string) error {
 func StartGeth(ctx context.Context, arguments string, g *errgroup.Group) error {
 	parsedArgs := strings.Split(arguments, " ")
 	cmd := exec.Command(
-		"/app/geth",
+		"/app/gwtc",
 		parsedArgs...,
 	) // #nosec G204
 

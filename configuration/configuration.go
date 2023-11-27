@@ -42,18 +42,6 @@ const (
 	// Mainnet is the Ethereum Mainnet.
 	Mainnet string = "MAINNET"
 
-	// Ropsten is the Ethereum Ropsten testnet.
-	Ropsten string = "ROPSTEN"
-
-	// Rinkeby is the Ethereum Rinkeby testnet.
-	Rinkeby string = "RINKEBY"
-
-	// Goerli is the Ethereum Görli testnet.
-	Goerli string = "GOERLI"
-
-	// Testnet defaults to `Ropsten` for backwards compatibility.
-	Testnet string = "TESTNET"
-
 	// DataDirectory is the default location for all
 	// persistent data.
 	DataDirectory = "/data"
@@ -72,7 +60,7 @@ const (
 	PortEnv = "PORT"
 
 	// GethEnv is an optional environment variable
-	// used to connect rosetta-ethereum to an already
+	// used to connect rosetta-waltonchain to an already
 	// running geth node.
 	GethEnv = "GETH"
 
@@ -86,7 +74,7 @@ const (
 	// by hosted node services. When not set, defaults to false.
 	SkipGethAdminEnv = "SKIP_GETH_ADMIN"
 
-	// MiddlewareVersion is the version of rosetta-ethereum.
+	// MiddlewareVersion is the version of rosetta-waltonchain.
 	MiddlewareVersion = "0.0.4"
 )
 
@@ -130,40 +118,8 @@ func LoadConfiguration() (*Configuration, error) {
 			Network:    ethereum.MainnetNetwork,
 		}
 		config.GenesisBlockIdentifier = ethereum.MainnetGenesisBlockIdentifier
-		config.Params = params.MainnetChainConfig
+		config.Params = ethereum.MainnetChainConfig
 		config.GethArguments = ethereum.MainnetGethArguments
-	case Ropsten:
-		config.Network = &types.NetworkIdentifier{
-			Blockchain: ethereum.Blockchain,
-			Network:    ethereum.RopstenNetwork,
-		}
-		config.GenesisBlockIdentifier = ethereum.RopstenGenesisBlockIdentifier
-		config.Params = params.RopstenChainConfig
-		config.GethArguments = ethereum.RopstenGethArguments
-	case Rinkeby:
-		config.Network = &types.NetworkIdentifier{
-			Blockchain: ethereum.Blockchain,
-			Network:    ethereum.RinkebyNetwork,
-		}
-		config.GenesisBlockIdentifier = ethereum.RinkebyGenesisBlockIdentifier
-		config.Params = params.RinkebyChainConfig
-		config.GethArguments = ethereum.RinkebyGethArguments
-	case Goerli:
-		config.Network = &types.NetworkIdentifier{
-			Blockchain: ethereum.Blockchain,
-			Network:    ethereum.GoerliNetwork,
-		}
-		config.GenesisBlockIdentifier = ethereum.GoerliGenesisBlockIdentifier
-		config.Params = params.GoerliChainConfig
-		config.GethArguments = ethereum.GoerliGethArguments
-	case Testnet:
-		config.Network = &types.NetworkIdentifier{
-			Blockchain: ethereum.Blockchain,
-			Network:    ethereum.DevNetwork,
-		}
-		config.GenesisBlockIdentifier = nil
-		config.Params = params.AllCliqueProtocolChanges
-		config.GethArguments = ethereum.DevGethArguments
 	case "":
 		return nil, errors.New("NETWORK must be populated")
 	default:
