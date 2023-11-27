@@ -37,8 +37,6 @@ RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH"
 FROM golang-builder as geth-builder
 
 # VERSION: WaltonChain_Gwtc_Src latest
-RUN pwd
-
 RUN git clone https://github.com/WaltonChain/WaltonChain_Gwtc_Src.git \
   && cd WaltonChain_Gwtc_Src \
   && git checkout 8a298c95a819491400b86e271bd109a037fa2d08
@@ -48,7 +46,9 @@ RUN mv WaltonChain_Gwtc_Src/ $GOPATH/src/github.com/wtc/go-wtc \
   && cd $GOPATH/src/github.com/wtc/go-wtc \
   && go env -w GO111MODULE="auto" \
   && cd cmd/gwtc \
-  && go build
+  && go build \
+
+RUN mv gwtc /app
 
 RUN mv $GOPATH/src/github.com/wtc/go-wtc/cmd/gwtc /app/gwtc \
   && rm -rf WaltonChain_Gwtc_Src $GOPATH/src/github.com
@@ -65,6 +65,7 @@ RUN mv src/rosetta-waltonchain /app/rosetta-waltonchain \
   && mkdir /app/waltonchain \
   && mv src/ethereum/call_tracer.js /app/waltonchain/call_tracer.js \
   && mv src/ethereum/geth.toml /app/waltonchain/geth.toml \
+  && mv src/wtc.json /app/wtc.json \
   && rm -rf src
 
 ## Build Final Image
@@ -88,5 +89,6 @@ COPY --from=rosetta-builder /app/rosetta-waltonchain /app/rosetta-waltonchain
 
 # Set permissions for everything added to /app
 RUN chmod -R 755 /app/*
+RUN gwtc --datadir /data/ init ./wtc.json
 
 CMD ["/app/rosetta-waltonchain", "run"]
