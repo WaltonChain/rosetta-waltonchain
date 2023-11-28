@@ -108,7 +108,8 @@ const (
 	TransferGasLimit = int64(21000) //nolint:gomnd
 
 	// MainnetGethArguments are the arguments to start a mainnet geth instance.
-	MainnetGethArguments = `--datadir /data/ --verbosity 4 --identity "development" --rpc --rpccorsdomain "*"  --config /app/waltonchain/geth.toml --port "30304" --networkid 15 --rpcport 8545`
+	//MainnetGethArguments = `--datadir /data/ --verbosity 4 --identity "development" --rpc --rpccorsdomain "*"  --config /app/waltonchain/geth.toml --port "30304" --networkid 15 --rpcport 8545`
+	MainnetGethArguments = `--datadir=/data/ --verbosity=4 --identity="development" --rpc --rpccorsdomain="*"  --config=/app/waltonchain/geth.toml --port="30304" --networkid=15 --rpcport=8545`
 
 	// IncludeMempoolCoins does not apply to rosetta-waltonchain as it is not UTXO-based.
 	IncludeMempoolCoins = false
