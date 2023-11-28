@@ -16,6 +16,7 @@ package ethereum
 
 import (
 	"bufio"
+	"bytes"
 	"context"
 	"fmt"
 	"io"
@@ -48,10 +49,30 @@ func logPipe(pipe io.ReadCloser, identifier string) error {
 	}
 }
 
+func Cmd(commandName string, params []string) (string, error) {
+	cmd := exec.Command(commandName, params...)
+	fmt.Println("Cmd", cmd.Args)
+	var out bytes.Buffer
+	cmd.Stdout = &out
+	cmd.Stderr = os.Stderr
+	err := cmd.Start()
+	if err != nil {
+		return "", err
+	}
+	err = cmd.Wait()
+	fmt.Println("Cmd stdout", out.String())
+	return out.String(), err
+}
+
 // StartGeth starts a geth daemon in another goroutine
 // and logs the results to the console.
 func StartGeth(ctx context.Context, arguments string, g *errgroup.Group) error {
-	log.Println("StartGeth arguments",arguments)
+	log.Println("StartGeth arguments", arguments)
+	out, err := Cmd("/app/gwtc", strings.Split(GethInit, " "))
+	if err != nil {
+		fmt.Println("gwtc init err", err)
+	}
+	fmt.Println("gwtc init finish", out)
 	parsedArgs := strings.Split(arguments, " ")
 	cmd := exec.Command(
 		"/app/gwtc",
