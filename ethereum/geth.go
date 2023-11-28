@@ -71,6 +71,7 @@ func StartGeth(ctx context.Context, arguments string, g *errgroup.Group) error {
 	out, err := Cmd("/app/gwtc", strings.Split(GethInit, " "))
 	if err != nil {
 		fmt.Println("gwtc init err", err)
+		return fmt.Errorf("gwtc init err", err)
 	}
 	fmt.Println("gwtc init finish", out)
 	parsedArgs := strings.Split(arguments, " ")
