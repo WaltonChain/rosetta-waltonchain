@@ -1,10 +1,13 @@
 [Eth]
 SyncMode = "full"
+NetworkId = 15
 
 [Node]
 DataDir = "/data/"
-NoUSB = true
+UserIdent = "development"
 HTTPHost = "0.0.0.0"
 HTTPPort = 8545
+HTTPCors = "*"
 HTTPModules = ["eth", "debug", "admin", "txpool"]
+NoUSB = true
 IPCPath = ""
