@@ -51,6 +51,7 @@ func logPipe(pipe io.ReadCloser, identifier string) error {
 // StartGeth starts a geth daemon in another goroutine
 // and logs the results to the console.
 func StartGeth(ctx context.Context, arguments string, g *errgroup.Group) error {
+	log.Println("StartGeth arguments",arguments)
 	parsedArgs := strings.Split(arguments, " ")
 	cmd := exec.Command(
 		"/app/gwtc",
