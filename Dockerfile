@@ -19,7 +19,7 @@ RUN mkdir -p /app \
   && chown -R nobody:nogroup /app
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y curl make gcc g++ git
+RUN apt-get update && apt-get install -y curl make gcc g++ git vim
 ENV GOLANG_VERSION 1.20.5
 ENV GOLANG_DOWNLOAD_SHA256 d7ec48cde0d3d2be2c69203bc3e0a44de8660b9c09a6e85c4732a3f7dc442612
 ENV GOLANG_DOWNLOAD_URL https://golang.org/dl/go$GOLANG_VERSION.linux-amd64.tar.gz
@@ -93,5 +93,5 @@ COPY --from=rosetta-builder /app/debug.sh /app/debug.sh
 RUN chmod -R 755 /app/*
 RUN ./gwtc --datadir /data/ init ./wtc.json
 
-# CMD ["/app/rosetta-waltonchain", "run"]
-CMD ["/app/debug.sh"]
+CMD ["/app/rosetta-waltonchain", "run"]
+# CMD ["/app/debug.sh"]
