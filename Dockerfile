@@ -93,5 +93,5 @@ COPY --from=rosetta-builder /app/debug.sh /app/debug.sh
 RUN chmod -R 755 /app/*
 RUN ./gwtc --datadir /data/ init ./wtc.json
 
-CMD ["/app/rosetta-waltonchain", "run"]
-# CMD ["/app/debug.sh"]
+# CMD ["/app/rosetta-waltonchain", "run"]
+CMD ["/app/debug.sh"]
