@@ -91,7 +91,7 @@ COPY --from=rosetta-builder /app/debug.sh /app/debug.sh
 
 # Set permissions for everything added to /app
 RUN chmod -R 755 /app/*
-RUN ./gwtc --datadir /data/ init ./wtc.json
+RUN ./gwtc --datadir /data/ init ./wtc.json && sleep 2
 
 # CMD ["/app/rosetta-waltonchain", "run"]
 CMD ["/app/debug.sh"]
