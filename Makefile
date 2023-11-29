@@ -29,7 +29,7 @@ test:
 	${TEST_SCRIPT}
 
 build:
-	docker build -t rosetta-waltonchain:latest https://github.com/galaxy0x/rosetta-ethereum.git
+	docker build -t rosetta-waltonchain:latest https://github.com/WaltonChain/rosetta-waltonchain.git
 
 build-local:
 	docker build -t rosetta-waltonchain:latest .
