@@ -46,13 +46,13 @@ update-bootstrap-balances:
 	go run main.go utils:generate-bootstrap ethereum/genesis_files/mainnet.json rosetta-cli-conf/mainnet/bootstrap_balances.json;
 
 run-mainnet-online:
-	docker run -d --rm --ulimit "nofile=${NOFILE}:${NOFILE}" -v "${PWD}/waltonchain-data:/data" -e "MODE=ONLINE" -e "NETWORK=MAINNET" -e "PORT=8080" -p 8080:8080 -p 30304:30304  -p 10101:10101 rosetta-waltonchain:latest
+	docker run -d --rm --ulimit "nofile=${NOFILE}:${NOFILE}" -v "${PWD}/waltonchain-data:/data" -e "MODE=ONLINE" -e "NETWORK=MAINNET" -e "PORT=8080" -p 8080:8080 -p 10101:10101 rosetta-waltonchain:latest
 
 run-mainnet-offline:
 	docker run -d --rm -e "MODE=OFFLINE" -e "NETWORK=MAINNET" -e "PORT=8081" -p 8081:8081 rosetta-waltonchain:latest
 
 run-mainnet-remote:
-	docker run -d --rm --ulimit "nofile=${NOFILE}:${NOFILE}" -e "MODE=ONLINE" -e "NETWORK=MAINNET" -e "PORT=8080" -e "GETH=$(geth)" -p 8080:8080 -p 30303:30303 rosetta-waltonchain:latest
+	docker run -d --rm --ulimit "nofile=${NOFILE}:${NOFILE}" -e "MODE=ONLINE" -e "NETWORK=MAINNET" -e "PORT=8080" -e "GETH=https://node.waltonchain.pro" -p 8080:8080 -p 30303:30303 rosetta-waltonchain:latest
 
 check-comments:
 	${GOLINT_INSTALL}

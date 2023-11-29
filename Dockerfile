@@ -64,7 +64,7 @@ RUN mv src/rosetta-waltonchain /app/rosetta-waltonchain \
   && mkdir /app/waltonchain \
   && mv src/ethereum/call_tracer.js /app/waltonchain/call_tracer.js \
   && mv src/ethereum/geth.toml /app/waltonchain/geth.toml \
-  && mv src/wtc.json /app/wtc.json \
+  && mv src/genesis.json /app/genesis.json \
   && mv src/debug.sh /app/debug.sh \
   && rm -rf src
 
@@ -86,12 +86,12 @@ COPY --from=geth-builder /app/gwtc /app/gwtc
 # Copy binary from rosetta-builder
 COPY --from=rosetta-builder /app/waltonchain /app/waltonchain
 COPY --from=rosetta-builder /app/rosetta-waltonchain /app/rosetta-waltonchain
-COPY --from=rosetta-builder /app/wtc.json /app/wtc.json
+COPY --from=rosetta-builder /app/genesis.json /app/genesis.json
 COPY --from=rosetta-builder /app/debug.sh /app/debug.sh
 
 # Set permissions for everything added to /app
 RUN chmod -R 755 /app/*
-# RUN /app/gwtc --datadir /data/ init /app/wtc.json && sleep 2
+# RUN /app/gwtc --datadir /data/ init /app/genesis.json
 
 CMD ["/app/rosetta-waltonchain", "run"]
 # CMD ["/app/debug.sh"]

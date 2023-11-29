@@ -116,7 +116,7 @@ const (
 	IncludeMempoolCoins = false
 
 	// init genesis geth
-	GethInit = "init ./wtc.json --datadir=/data/"
+	GethInit = "init ./genesis.json --datadir=/data/"
 )
 
 var (
