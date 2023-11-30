@@ -3,7 +3,7 @@
     "blockchain": "WaltonChain",
     "network": "Mainnet"
   },
-  "reconciliation_disabled":true,
+  "reconciliation_disabled": true,
   "balance_tracking_disabled": true,
   "data_directory": "cli-data",
   "http_timeout": 300,
