@@ -734,6 +734,8 @@ func (ec *Client) getBlockTraces(
 	}
 
 	// Decode []*rpcCall
+	fmt.Println("debug_traceBlockByHash request",blockHash,ec.tc)
+	fmt.Println("debug_traceBlockByHash response",string(raw))
 	if err := json.Unmarshal(raw, &calls); err != nil {
 		return nil, nil, err
 	}
