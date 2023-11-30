@@ -4,7 +4,7 @@
    "address": "0x33e44e3184941b57668d367A0dbCaf304a53b510"
   },
   "currency": {
-   "symbol": "ETH",
+   "symbol": "WTC",
    "decimals": 18
   },
   "value": "70000000000000000000000000"
@@ -14,7 +14,7 @@
    "address": "0x376E7E29600F66b21489992E21ec9fAe87cF7f0a"
   },
   "currency": {
-   "symbol": "ETH",
+   "symbol": "WTC",
    "decimals": 18
   },
   "value": "5000000000000000000000000"
@@ -24,7 +24,7 @@
    "address": "0x83CBf5a6BC8B4383Be618Be5A105AE4Bc0271a3F"
   },
   "currency": {
-   "symbol": "ETH",
+   "symbol": "WTC",
    "decimals": 18
   },
   "value": "1619936000000000000000000"
