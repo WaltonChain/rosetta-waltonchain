@@ -18,7 +18,7 @@
     "bootstrap_balances": "bootstrap_balances.json",
     "end_conditions": {
       "reconciliation_coverage": {
-        "from_tip": true
+        "tip": true
       }
     }
   }
