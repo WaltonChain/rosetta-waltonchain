@@ -434,13 +434,13 @@ func (ec *Client) Transaction(
 	var traces *Call
 	var rawTraces json.RawMessage
 	var addTraces bool
-	if header.Number.Int64() != GenesisBlockIndex { // not possible to get traces at genesis
-		addTraces = true
-		traces, rawTraces, err = ec.getTransactionTraces(ctx, body.tx.Hash())
-		if err != nil {
-			return nil, fmt.Errorf("%w: could not get traces for %x", err, body.tx.Hash())
-		}
-	}
+	//if header.Number.Int64() != GenesisBlockIndex { // not possible to get traces at genesis
+	//	addTraces = true
+	//	traces, rawTraces, err = ec.getTransactionTraces(ctx, body.tx.Hash())
+	//	if err != nil {
+	//		return nil, fmt.Errorf("%w: could not get traces for %x", err, body.tx.Hash())
+	//	}
+	//}
 
 	loadedTx := body.LoadedTransaction()
 	loadedTx.Transaction = body.tx
@@ -627,13 +627,13 @@ func (ec *Client) getBlock(
 	var traces []*rpcCall
 	var rawTraces []*rpcRawCall
 	var addTraces bool
-	if head.Number.Int64() != GenesisBlockIndex { // not possible to get traces at genesis
-		addTraces = true
-		traces, rawTraces, err = ec.getBlockTraces(ctx, body.Hash)
-		if err != nil {
-			return nil, nil, fmt.Errorf("%w: could not get traces for %x", err, body.Hash[:])
-		}
-	}
+	//if head.Number.Int64() != GenesisBlockIndex { // not possible to get traces at genesis
+	//	addTraces = true
+	//	traces, rawTraces, err = ec.getBlockTraces(ctx, body.Hash)
+	//	if err != nil {
+	//		return nil, nil, fmt.Errorf("%w: could not get traces for %x", err, body.Hash[:])
+	//	}
+	//}
 
 	// Convert all txs to loaded txs
 	txs := make([]*types.Transaction, len(body.Transactions))
@@ -734,8 +734,8 @@ func (ec *Client) getBlockTraces(
 	}
 
 	// Decode []*rpcCall
-	fmt.Println("debug_traceBlockByHash request",blockHash,ec.tc)
-	fmt.Println("debug_traceBlockByHash response",string(raw))
+	fmt.Println("debug_traceBlockByHash request", blockHash, ec.tc)
+	fmt.Println("debug_traceBlockByHash response", string(raw))
 	if err := json.Unmarshal(raw, &calls); err != nil {
 		return nil, nil, err
 	}
@@ -1156,6 +1156,48 @@ func feeOps(tx *loadedTransaction) []*RosettaTypes.Operation {
 	return append(ops, burntOp)
 }
 
+func transactionOps(tx *loadedTransaction, ops []*RosettaTypes.Operation) []*RosettaTypes.Operation {
+	index := int64(len(ops))
+
+	transactionOps := []*RosettaTypes.Operation{
+		{
+			OperationIdentifier: &RosettaTypes.OperationIdentifier{
+				Index: index,
+			},
+			Type:   CallOpType,
+			Status: RosettaTypes.String(SuccessStatus),
+			Account: &RosettaTypes.AccountIdentifier{
+				Address: MustChecksum(tx.From.String()),
+			},
+			Amount: &RosettaTypes.Amount{
+				Value:    new(big.Int).Neg(tx.Transaction.Value()).String(),
+				Currency: Currency,
+			},
+		},
+		{
+			OperationIdentifier: &RosettaTypes.OperationIdentifier{
+				Index: index + 1,
+			},
+			RelatedOperations: []*RosettaTypes.OperationIdentifier{
+				{
+					Index: index,
+				},
+			},
+			Type:   CallOpType,
+			Status: RosettaTypes.String(SuccessStatus),
+			Account: &RosettaTypes.AccountIdentifier{
+				Address: MustChecksum(tx.Transaction.To().String()),
+			},
+			Amount: &RosettaTypes.Amount{
+				Value:    tx.Transaction.Value().String(),
+				Currency: Currency,
+			},
+		},
+	}
+	ops = append(ops, transactionOps...)
+	return ops
+}
+
 // transactionReceipt returns the receipt of a transaction by transaction hash.
 // Note that the receipt is not available for pending transactions.
 func (ec *Client) transactionReceipt(
@@ -1386,11 +1428,12 @@ func (ec *Client) populateTransaction(
 	ops = append(ops, feeOps...)
 
 	// Compute trace operations
-	traces := flattenTraces(tx.Trace, []*flatCall{})
+	//traces := flattenTraces(tx.Trace, []*flatCall{})
+	//
+	//traceOps := traceOps(traces, len(ops))
+	//ops = append(ops, traceOps...)
 
-	traceOps := traceOps(traces, len(ops))
-	ops = append(ops, traceOps...)
-
+	ops = transactionOps(tx, ops)
 	// Marshal receipt and trace data
 	// TODO: replace with marshalJSONMap (used in `services`)
 	receiptBytes, err := tx.Receipt.MarshalJSON()
