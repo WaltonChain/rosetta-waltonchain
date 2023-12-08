@@ -1181,10 +1181,10 @@ func transactionOps(tx *loadedTransaction, ops []*RosettaTypes.Operation) []*Ros
 			Type:   CallOpType,
 			Status: RosettaTypes.String(SuccessStatus),
 			Account: &RosettaTypes.AccountIdentifier{
-				Address: MustChecksum(tx.From.String()),
+				Address: MustChecksum(from.String()),
 			},
 			Amount: &RosettaTypes.Amount{
-				Value:    new(big.Int).Neg(tx.Transaction.Value()).String(),
+				Value:    new(big.Int).Neg(value).String(),
 				Currency: Currency,
 			},
 		},
@@ -1200,10 +1200,10 @@ func transactionOps(tx *loadedTransaction, ops []*RosettaTypes.Operation) []*Ros
 			Type:   CallOpType,
 			Status: RosettaTypes.String(SuccessStatus),
 			Account: &RosettaTypes.AccountIdentifier{
-				Address: MustChecksum(tx.Transaction.To().String()),
+				Address: MustChecksum(to.String()),
 			},
 			Amount: &RosettaTypes.Amount{
-				Value:    tx.Transaction.Value().String(),
+				Value:    value.String(),
 				Currency: Currency,
 			},
 		},
