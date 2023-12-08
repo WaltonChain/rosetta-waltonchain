@@ -1137,7 +1137,7 @@ func feeOps(tx *loadedTransaction) []*RosettaTypes.Operation {
 			},
 		},
 	}
-	if tx.FeeBurned == nil {
+	if tx.FeeBurned == nil || tx.FeeBurned.Sign()==0 {
 		return ops
 	}
 	burntOp := &RosettaTypes.Operation{
@@ -1448,8 +1448,10 @@ func (ec *Client) populateTransaction(
 	}
 
 	var traceMap map[string]interface{}
-	if err := json.Unmarshal(tx.RawTrace, &traceMap); err != nil {
-		return nil, err
+	if tx.RawTrace!=nil{
+		if err := json.Unmarshal(tx.RawTrace, &traceMap); err != nil {
+			return nil, err
+		}
 	}
 
 	populatedTransaction := &RosettaTypes.Transaction{
