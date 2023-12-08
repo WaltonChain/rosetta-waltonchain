@@ -1160,6 +1160,19 @@ func feeOps(tx *loadedTransaction) []*RosettaTypes.Operation {
 func transactionOps(tx *loadedTransaction, ops []*RosettaTypes.Operation) []*RosettaTypes.Operation {
 	index := int64(len(ops))
 
+	 from:=tx.From
+	 to:=tx.Transaction.To()
+	 value:=tx.Transaction.Value()
+	if from==nil{
+		from=&common.Address{}
+	}
+	if to==nil{
+		to=&common.Address{}
+	}
+	if value==nil{
+		value=big.NewInt(0)
+	}
+
 	transactionOps := []*RosettaTypes.Operation{
 		{
 			OperationIdentifier: &RosettaTypes.OperationIdentifier{
