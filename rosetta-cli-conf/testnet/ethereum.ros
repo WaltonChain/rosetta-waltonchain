@@ -1,6 +1,6 @@
 request_funds(1){
   find_account{
-    currency = {"symbol":"ETH", "decimals":18};
+    currency = {"symbol":"WTC", "decimals":18};
     random_account = find_balance({
       "minimum_balance":{
         "value": "0",
@@ -26,7 +26,7 @@ request_funds(1){
 
 create_account(1){
   create{
-    network = {"network":"Ropsten", "blockchain":"Ethereum"};
+    network = {"network":"Mainnet", "blockchain":"WaltonChain"};
     key = generate_key({"curve_type": "secp256k1"});
     account = derive({
       "network_identifier": {{network}},
@@ -43,8 +43,8 @@ create_account(1){
 
 transfer(10){
   transfer{
-    transfer.network = {"network":"Ropsten", "blockchain":"Ethereum"};
-    currency = {"symbol":"ETH", "decimals":18};
+    transfer.network = {"network":"Mainnet", "blockchain":"WaltonChain"};
+    currency = {"symbol":"WTC", "decimals":18};
     sender = find_balance({
       "minimum_balance":{
         "value": "10000000000000000",
@@ -96,8 +96,8 @@ transfer(10){
 return_funds(10){
   // TODO: add suggested fee dry run to ensure account fully cleared
   transfer{
-    transfer.network = {"network":"Ropsten", "blockchain":"Ethereum"};
-    currency = {"symbol":"ETH", "decimals":18};
+    transfer.network = {"network":"Mainnet", "blockchain":"WaltonChain"};
+    currency = {"symbol":"WTC", "decimals":18};
     max_fee = "84000000000000";
     sender = find_balance({
       "minimum_balance":{
@@ -112,7 +112,7 @@ return_funds(10){
     sender_amount = 0 - {{available_amount}};
 
     // Provide a static address as the recipient and construct operations
-    faucet = {"address":"0xb41B39479a525AB69e38c701A713D98E3074252c"};
+    faucet = {"address":"0x4459d82F331a8695eBbcD099D84aE45Ff48e1eB7"};
     transfer.confirmation_depth = "1";
     transfer.operations = [
       {
