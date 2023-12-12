@@ -13,7 +13,7 @@
   "construction": {
     "stale_depth": 6,
     "broadcast_limit": 3,
-    "constructor_dsl_file": "ethereum.ros",
+    "constructor_dsl_file": "waltonChain.ros",
     "end_conditions": {
       "create_account": 10,
       "transfer": 20
