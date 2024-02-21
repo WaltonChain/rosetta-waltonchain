@@ -3,9 +3,10 @@ module github.com/coinbase/rosetta-waltonchain
 require (
 	github.com/OneOfOne/xxhash v1.2.5 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
-	github.com/coinbase/rosetta-sdk-go v0.7.10
+	github.com/coinbase/rosetta-sdk-go v0.8.4
+	github.com/coinbase/rosetta-sdk-go/types v1.0.0
 	github.com/dustin/go-humanize v1.0.1 // indirect
-	github.com/ethereum/go-ethereum v1.10.18
+	github.com/ethereum/go-ethereum v1.10.21
 	github.com/fatih/color v1.13.0
 	github.com/go-stack/stack v1.8.1 // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
